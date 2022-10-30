@@ -1,0 +1,60 @@
+---
+title: "ltp1 hypothetical data"
+author: "Melissa Solem"
+date: "2022-10-13"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Hypothesis I
+```{r}
+#loading data into R
+coip.data.hyp1<-read.csv("LTP1 hypothesis 1 data - Sheet1.csv")
+attach(coip.data.hyp1)
+
+#sd calculations
+sd.WT1<-sd(WT)
+sd.mutated1<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(WT, mutated, alternative=c("greater"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "WT", "WT", "Mutated", "Mutated","Mutated","Mutated","Mutated"), value = c(.73, .75,.85,.8,.84, 0.03,0.05,0.01,0.04,0.06))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(0.794, .038), sd = c(0.05319774, 0.01923538))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("STAT1-RABV/GAPDH") + ggtitle("Densitometry Analysis")
+```
+
+
+# Hypothesis II
+```{r}
+#loading data into R
+coip.data.hyp2<-read.csv("ltp1 hypothesis 2 hypothetical data - Sheet1.csv")
+attach(coip.data.hyp2)
+
+#sd calculations
+sd.WT<-sd(WT)
+sd.mutated<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(WT, mutated, alternative=c("greater"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "WT", "WT", "Mutated", "Mutated","Mutated","Mutated","Mutated"), value = c(.8, .71,.84,.87,.85, 0,0.04,0.03,0.07,0.01))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(.814, .03), sd = c(0.06348228, 0.02738613))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("p75-RABV/GAPDH") + ggtitle("Densitometry Analysis")
+```
+
+
+
