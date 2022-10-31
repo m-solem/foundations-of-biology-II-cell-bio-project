@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Hypothesis I
+
+#STAT1-RABV
 ```{r}
 #loading data into R
 coip.data.hyp1<-read.csv("LTP1 hypothesis 1 data - Sheet1.csv")
@@ -30,7 +32,29 @@ graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(0.794, .038), sd 
 library(ggplot2)
 
 #creating plot
-ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("STAT1-RABV/GAPDH") + ggtitle("Densitometry Analysis")
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("STAT1-RABV/GAPDH") + ggtitle("Densitometry Analysis: STAT1-RABV")
+```
+
+#STAT1-MIP1a
+```{r}
+#loading data into R
+coip.data.mip1a.hyp1<-read.csv("LTP1 hypothesis 1 data - densiometry stat1-mip1a.csv")
+attach(coip.data.mip1a.hyp1)
+
+#sd calculations
+sd.mip1a.WT1<-sd(wt)
+sd.mip1a.mutated1<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(wt, mutated, alternative=c("less"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "WT", "WT", "Mutated", "Mutated","Mutated","Mutated","Mutated"), value = c(.06, 0,.04,.01,.02, 0.77,0.8,0.84,0.75,0.85))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(0.026, 0.802), sd = c(0.02408319, 0.0432435))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("STAT1 - MIP-1a/GAPDH") + ggtitle("Densitometry Analysis: STAT1 - MIP-1a")
 ```
 
 
@@ -53,7 +77,7 @@ graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(.814, .03), sd = 
 library(ggplot2)
 
 #creating plot
-ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("p75-RABV/GAPDH") + ggtitle("Densitometry Analysis")
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("p75-RABV/GAPDH") + ggtitle("Densitometry Analysis: p75-RABV")
 ```
 
 
