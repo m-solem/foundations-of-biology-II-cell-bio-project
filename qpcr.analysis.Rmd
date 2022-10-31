@@ -1,0 +1,77 @@
+---
+title: "RT-qPCR analysis"
+author: "Melissa Solem"
+date: "2022-10-30"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Hypothesis 1
+
+#rabv analysis
+```{r}
+#loading data into R
+pcr.data.hyp1<-read.csv("LTP1 hypothesis 1 data - rt-qpcr.csv")
+attach(pcr.data.hyp1)
+
+#sd calculations
+sd.pcr.WT<-sd(wt)
+sd.pcr.mutated<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(wt, mutated, alternative=c("less"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "Mutated", "Mutated","Mutated"), value = c(10, 11, 9, 18, 15, 19))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(10.00000, 17.33333 ), sd = c(1, 2.081666))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("RT-qPCR threshold (Ct) values") + ggtitle("RT-qPCR Analysis: RABV mRNA")
+```
+#stat1 analysis
+```{r}
+#loading data into R
+pcr.data.stat1<-read.csv("LTP1 hypothesis 1 data - rt-qpcr - stat1.csv")
+attach(pcr.data.stat1)
+
+#sd calculations
+sd.pcr.stat1.WT<-sd(wt)
+sd.pcr.stat1.mutated<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(wt, mutated, alternative=c("greater"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "Mutated", "Mutated","Mutated"), value = c(18, 17, 18, 12, 14, 11))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(17.66667, 12.33333), sd = c(0.5773503, 1.527525))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("RT-qPCR threshold (Ct) values") + ggtitle("RT-qPCR Analysis: STAT1 mRNA")
+```
+
+#mip-1a analysis
+```{r}
+#loading data into R
+pcr.data.mip1a<-read.csv("LTP1 hypothesis 1 data - rt-qpcr - mip-1a.csv")
+attach(pcr.data.mip1a)
+
+#sd calculations
+sd.pcr.mip1a.WT<-sd(wt)
+sd.pcr.mip1a.mutated<-sd(mutated)
+
+#Welch two-sample t-test between WT and mutated data
+t.test(wt, mutated, alternative=c("greater"),conf.level=0.99)
+
+#data visualization data
+jitter.data<-data.frame(treatment=c("WT", "WT", "WT", "Mutated", "Mutated","Mutated"), value = c(16, 18, 19, 9, 11, 12))
+graph.data<-data.frame(treatment=c("WT", "Mutated"), value = c(17.66667, 10.66667), sd = c(1.527525, 1.527525))
+library(ggplot2)
+
+#creating plot
+ggplot(data=graph.data, aes(x=treatment, y=value,color=treatment)) + geom_bar(stat="identity") + geom_jitter(data=jitter.data) + geom_errorbar(aes(x=treatment,ymin=(value-sd),ymax=(value+sd))) + xlab("Treatment") + ylab("RT-qPCR threshold (Ct) values") + ggtitle("RT-qPCR Analysis: MIP-1a mRNA")
+```
